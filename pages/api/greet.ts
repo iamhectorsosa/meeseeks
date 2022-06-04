@@ -5,16 +5,23 @@ export default async function handler(
     res: NextApiResponse
 ) {
     if (req.method === "POST") {
-        console.log(req.body);
-        const myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${process.env.BOT_TOKEN}`);
-        myHeaders.append("Content-type", "application/json;charset=utf-8");
+        const reqHeaders = {
+            Authorization: `Bearer ${process.env.BOT_TOKEN}`,
+            "Content-type": "application/json;charset=utf-8",
+        };
 
-        const raw = `{"channel":"#software-development","text": "Hello ${req.body.user_name}!"}`;
+        const commandBody = req.body || {
+            channel_name: "general",
+            user_name: "anonymous",
+        };
+
+        const { channel_name, user_name } = commandBody;
+
+        const raw = `{"channel": "${channel_name}","text": "Hello, ${user_name}!"}`;
 
         const requestOptions = {
             method: "POST",
-            headers: myHeaders,
+            headers: reqHeaders,
             body: raw,
         };
 
@@ -23,7 +30,7 @@ export default async function handler(
                 "https://slack.com/api/chat.postMessage",
                 requestOptions
             );
-            res.status(200).json(data);
+            res.status(200).end();
         } catch (error) {
             console.log(error);
         }
