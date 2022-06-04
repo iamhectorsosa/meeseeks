@@ -5,28 +5,36 @@ export default async function handler(
     res: NextApiResponse
 ) {
     if (req.method === "POST") {
-        const reqHeaders = {
+        const headers = {
             Authorization: `Bearer ${process.env.BOT_TOKEN}`,
             "Content-type": "application/json;charset=utf-8",
         };
 
-        const commandBody = req.body || {
+        const request_body = req.body || {
             channel_name: "general",
             user_name: "anonymous",
         };
 
-        const { channel_name, user_name } = commandBody;
+        const { channel_name, user_name } = request_body;
 
-        const raw = `{"channel": "${channel_name}","text": "Hello, ${user_name}!"}`;
+        const raw = `{"channel": "${channel_name}","blocks": [
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "Hello, ${user_name}! This is *The Garage* speaking! For more information please visit this <https://github.com/ekqt/slack-bot|repo>!"
+                }
+            }
+        ], "text": "Hello, ${user_name}!"}`;
 
         const requestOptions = {
             method: "POST",
-            headers: reqHeaders,
+            headers,
             body: raw,
         };
 
         try {
-            const data = await fetch(
+            await fetch(
                 "https://slack.com/api/chat.postMessage",
                 requestOptions
             );
@@ -35,6 +43,6 @@ export default async function handler(
             console.log(error);
         }
     } else {
-        res.status(200).json({ response: "Hello! I'm The Garage" });
+        res.status(404).end();
     }
 }
