@@ -10,7 +10,7 @@ export default async function handler(
         myHeaders.append("Authorization", `Bearer ${process.env.BOT_TOKEN}`);
         myHeaders.append("Content-type", "application/json;charset=utf-8");
 
-        const raw = `{"channel":"#software-development","text": "Hello!"}`;
+        const raw = `{"channel":"#software-development","text": "Hello ${req.body.user_name}!"}`;
 
         const requestOptions = {
             method: "POST",
