@@ -24,13 +24,14 @@ export default async function handler(
         };
 
         console.log(JSON.stringify(req.body));
+
         const request_body = req.body || {
-            channel_name: "general",
+            channel_id: "C03J3G756F8",
         };
 
-        const { channel_name } = request_body;
+        const { channel_id, channel_name, user_id } = request_body;
 
-        const raw = `{"channel": "${channel_name}","blocks": [
+        const raw = `{"channel": "${channel_name === 'directmessage' ? user_id : channel_id }","blocks": [
             {
                 "type": "section",
                 "text": {
