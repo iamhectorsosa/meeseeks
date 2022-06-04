@@ -9,6 +9,7 @@ export default function handler(
     res: NextApiResponse<Data>
 ) {
     if (req.method === "POST") {
+        console.log(req.body);
         var myHeaders = new Headers();
         myHeaders.append(
             "Authorization",
@@ -16,7 +17,7 @@ export default function handler(
         );
         myHeaders.append("Content-type", "application/json;charset=utf-8");
 
-        var raw = `{"channel":"#software-development","text": "Hello, there!"}`;
+        var raw = `{"channel":"#software-development","text": "Hello!"}`;
 
         var requestOptions = {
             method: "POST",
@@ -24,11 +25,10 @@ export default function handler(
             body: raw,
         };
 
-        fetch("https://slack.com/api/chat.postMessage", requestOptions)
+        return fetch("https://slack.com/api/chat.postMessage", requestOptions)
             .then((response) => response.text())
             .then((result) => console.log(result))
             .catch((error) => console.log("error", error));
-        res.status(200).json({ response: "Message successfully sent!" });
     } else {
         res.status(200).json({ response: "Hello! I'm The Garage" });
     }
