@@ -11,13 +11,15 @@ export default async function handler(
         };
 
         const request_body = req.body || {
-            channel_name: "general",
+            channel_id: "C03J3G756F8",
             user_name: "anonymous",
         };
 
-        const { channel_name, user_name } = request_body;
+        const { channel_id, channel_name, user_id, user_name } = request_body;
 
-        const raw = `{"channel": "${channel_name}","blocks": [
+        const raw = `{"channel": "${
+            channel_name === "directmessage" ? user_id : channel_id
+        }","blocks": [
             {
                 "type": "section",
                 "text": {

@@ -31,7 +31,9 @@ export default async function handler(
 
         const { channel_id, channel_name, user_id } = request_body;
 
-        const raw = `{"channel": "${channel_name === 'directmessage' ? user_id : channel_id }","blocks": [
+        const raw = `{"channel": "${
+            channel_name === "directmessage" ? user_id : channel_id
+        }","blocks": [
             {
                 "type": "section",
                 "text": {
