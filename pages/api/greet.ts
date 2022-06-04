@@ -12,7 +12,7 @@ export default function handler(
         var myHeaders = new Headers();
         myHeaders.append(
             "Authorization",
-            "Bearer xoxb-3619253754101-3645930898416-322UngcsCyynCnQDjwFRdai2"
+            `Bearer ${process.env.BOT_TOKEN}`
         );
         myHeaders.append("Content-type", "application/json;charset=utf-8");
 
