@@ -14,7 +14,6 @@ export default async function handler(
             });
             const jokeText = await jokeResponse.json();
             joke = jokeText.joke;
-            console.log(joke);
         } catch (error) {
             console.log(error);
         }
@@ -24,8 +23,9 @@ export default async function handler(
             "Content-type": "application/json;charset=utf-8",
         };
 
+        console.log(JSON.stringify(req.body));
         const request_body = req.body || {
-            channel_name: "general"
+            channel_name: "general",
         };
 
         const { channel_name } = request_body;
