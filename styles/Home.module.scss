@@ -1,0 +1,30 @@
+.container {
+	padding: 0 2rem;
+	--tx-size-title: 4rem;
+	--tx-size-subtitle: 1.5rem;
+}
+
+.main {
+	width: min(100vw - 4rem, 50rem);
+	margin-inline: auto;
+	padding-block: 4rem 2rem;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+    justify-content: center;
+	align-items: center;
+    text-align: center;
+}
+
+.heading {
+	font-size: var(--tx-size-title);
+	margin-block: 1rem 0rem;
+	line-height: 1.15;
+}
+
+.description {
+	font-size: var(--tx-size-subtitle);
+    font-weight: 300;
+	margin-block: 1rem;
+	line-height: 1.5;
+}
