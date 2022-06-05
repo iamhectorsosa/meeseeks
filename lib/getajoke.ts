@@ -5,7 +5,7 @@ export default async function getajoke() {
             headers: { Accept: "application/json" },
         });
         const data = await res.json();
-        console.log(data.joke);
+        // console.log(data.joke);
         return data.joke;
     } catch (error) {
         console.log(error);
