@@ -97,7 +97,7 @@ There are several options to choose from when responding to a user (see all opti
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
-				"text": "Hello, <#${user_id}>! I'm Mr. Meeseeks! Look at me!"
+				"text": "Hello, <@${user_id}>! I'm Mr. Meeseeks! Look at me!"
 			}
 		}
 	]
@@ -112,7 +112,7 @@ So, how are we building our response? For that we need to fire up a Next.js proj
 
 ```javascript
 export default async function handler() {
-    const { response_url, user_id, user_name } = req.body;
+    const { response_url, user_id } = req.body;
 
     try {
         const headers = {
@@ -127,11 +127,11 @@ export default async function handler() {
                     type: "section",
                     text: {
                         type: "mrkdwn",
-                        text: "Hello, <#${user_id}>! I'm Mr. Meeseeks! Look at me!",
+                        text: "Hello, <@${user_id}>! I'm Mr. Meeseeks! Look at me!",
                     },
                 },
             ],
-            text: "Hello, ${user_name}!",
+            text: "Hello, I'm Mr. Meeseeks! Look at me!",
         }`;
 
         const requestOptions = {
