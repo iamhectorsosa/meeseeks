@@ -31,7 +31,7 @@ export default async function handler(
 
             console.log(responseJson);
 
-            const { team, access_token, incoming_webhook } = responseJson;
+            const { app_id, team, access_token, incoming_webhook } = responseJson;
 
             const db = await database();
 
@@ -50,7 +50,7 @@ export default async function handler(
             console.error(error);
         }
 
-        res.redirect("slack://").end();
+        res.redirect(301, `https://slack.com/app_redirect?app=${app_id}`);
     } else {
         res.status(404).end();
     }
