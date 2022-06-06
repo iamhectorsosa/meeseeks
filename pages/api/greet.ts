@@ -35,7 +35,7 @@ export default async function handler(
                         type: "section",
                         text: {
                             type: "mrkdwn",
-                            text: "Hello, <${user_id}>! I'm Mr. Meeseeks! Look at me!",
+                            text: "Hello, <#${user_id}>! I'm Mr. Meeseeks! Look at me!",
                         },
                     },
                 ],

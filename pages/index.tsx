@@ -67,7 +67,7 @@ const Home: NextPage = () => {
                     Add to Slack
                 </a>
             </main>
-            <GitHubCorner href={"https://github.com/ekqt"} />
+            <GitHubCorner href={"https://github.com/ekqt/meeseeks"} />
         </div>
     );
 };
