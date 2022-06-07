@@ -53,7 +53,7 @@ export default async function handler(
             const requestOptions = {
                 method: "POST",
                 headers,
-                body: raw.toString(),
+                body: JSON.stringify(raw)
             };
 
             await fetch(`${response_url}`, requestOptions);
