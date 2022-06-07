@@ -2,6 +2,9 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import database from "../../lib/database";
 import { doc, getDoc } from "firebase/firestore";
 
+import getExcuse from "../../lib/getExcuse";
+import botSignOff from "../../lib/botSignOff";
+
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
@@ -27,14 +30,18 @@ export default async function handler(
                 "Content-type": "application/json",
             };
 
-            let raw = {
+            let excuse: string = await getExcuse();
+
+            const botMessage: string = botSignOff("excuse");
+
+            let raw = `{
                 response_type: "in_channel",
                 blocks: [
                     {
                         type: "section",
                         text: {
-                            type: "mrkdwn",
-                            text: "I'm Mr. Meeseeks! Look at me! If you want me to tell a joke, advice, useless facts or to even make excuses for you! I suuuure can dooo! Use _slash commands_ to summon me such as: `/tellmeajoke`, `/givemeadvice`, `/tellmeafact`, or `/excuseme`. If I am busy talking with someone else and don't reply, just ask again.",
+                            type: "plain_text",
+                            text: "<@${user_id}> cannot make it and left you this message: Sorry! ${excuse}",
                         },
                     },
                     {
@@ -42,18 +49,18 @@ export default async function handler(
                         elements: [
                             {
                                 type: "mrkdwn",
-                                text: `*<@${user_id}>* wanted me to introduce myself.`,
+                                text: "*<@${user_id}>* ${botMessage}.",
                             },
                         ],
                     },
                 ],
-                text: "Hello, I'm Mr. Meeseeks! Look at me!",
-            };
+                text: "${excuse}!",
+            }`;
 
             const requestOptions = {
                 method: "POST",
                 headers,
-                body: JSON.stringify(raw)
+                body: raw,
             };
 
             await fetch(`${response_url}`, requestOptions);
