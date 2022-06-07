@@ -61,7 +61,7 @@ curl --request POST 'https://slack.com/api/chat.postMessage' \
 From **Slash Commands** you are able to click on **Create a New Command** and here's what you'll need (here's an example of mine):
 
 * Command: `/greet`
-* Request URL: `https://meeseeksbot.vercel.app/api/greet`
+* Request URL: `https://{...}.vercel.app/api/greet`
 * Short Description: `Greet Mr. Meeseeks!`
 
 ### What happens when your command is invoked?
