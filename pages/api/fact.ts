@@ -10,7 +10,7 @@ export default async function handler(
     res: NextApiResponse
 ) {
     if (req.method === "POST") {
-        const { team_id, response_url, user_name } = req.body;
+        const { team_id, response_url, user_id } = req.body;
 
         try {
             const db = await database();
@@ -38,18 +38,9 @@ export default async function handler(
                     {
                         type: "section",
                         text: {
-                            type: "plain_text",
-                            text: "${fact}",
+                            type: "mrkdwn",
+                            text: "${fact} <@${user_id}> ${botSignOff}_.",
                         },
-                    },
-                    {
-                        type: "context",
-                        elements: [
-                            {
-                                type: "mrkdwn",
-                                text: "*@${user_name}* ${botSignOff}.",
-                            },
-                        ],
                     },
                 ],
                 text: "${fact}!",
