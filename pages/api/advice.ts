@@ -32,7 +32,7 @@ export default async function handler(
 
             let advice: string = await getAdvice();
 
-            const botMessage: string = botSignOff();
+            const botMessage: string = botSignOff("advice");
 
             let raw = `{
                 response_type: "in_channel",

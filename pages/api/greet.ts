@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import database from "../../lib/database";
-
 import { doc, getDoc } from "firebase/firestore";
 
 export default async function handler(
@@ -28,24 +27,33 @@ export default async function handler(
                 "Content-type": "application/json",
             };
 
-            let raw = `{
+            let raw = {
                 response_type: "in_channel",
                 blocks: [
                     {
                         type: "section",
                         text: {
                             type: "mrkdwn",
-                            text: "Hello, <@${user_id}>! I'm Mr. Meeseeks! Look at me!",
+                            text: "I'm Mr. Meeseeks! Look at me! If you want a joke, advice or a useless fact! I suuuure can dooo! Use _slash commands_ to summon me: `/tellmeajoke`, `/givemeadvice`, or `/tellmeafact`.",
                         },
+                    },
+                    {
+                        type: "context",
+                        elements: [
+                            {
+                                type: "mrkdwn",
+                                text: `*<@${user_id}>* wanted me to introduce myself.`,
+                            },
+                        ],
                     },
                 ],
                 text: "Hello, I'm Mr. Meeseeks! Look at me!",
-            }`;
+            };
 
             const requestOptions = {
                 method: "POST",
                 headers,
-                body: raw,
+                body: raw.toString(),
             };
 
             await fetch(`${response_url}`, requestOptions);

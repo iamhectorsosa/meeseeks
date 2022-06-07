@@ -32,7 +32,7 @@ export default async function handler(
 
             let fact: string = await getFact();
 
-            const botMessage: string = botSignOff();
+            const botMessage: string = botSignOff("fact");
 
             let raw = `{
                 response_type: "in_channel",
