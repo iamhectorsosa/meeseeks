@@ -49,7 +49,7 @@ export default async function handler(
                         elements: [
                             {
                                 type: "mrkdwn",
-                                text: "*<@${user_id}>* ${botMessage}",
+                                text: "*<@${user_id}>* ${botMessage}.",
                             },
                         ],
                     },

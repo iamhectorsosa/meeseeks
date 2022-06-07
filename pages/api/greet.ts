@@ -34,7 +34,7 @@ export default async function handler(
                         type: "section",
                         text: {
                             type: "mrkdwn",
-                            text: "I'm Mr. Meeseeks! Look at me! If you want a joke, advice or a useless fact! I suuuure can dooo! Use _slash commands_ to summon me: `/tellmeajoke`, `/givemeadvice`, or `/tellmeafact`.",
+                            text: "I'm Mr. Meeseeks! Look at me! If you want a joke, advice or a useless fact! I suuuure can dooo! Use _slash commands_ to summon me such as: `/tellmeajoke`, `/givemeadvice`, or `/tellmeafact`.",
                         },
                     },
                     {
