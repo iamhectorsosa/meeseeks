@@ -4,7 +4,6 @@ import { doc, getDoc } from "firebase/firestore";
 
 import getJoke from "../../lib/getJoke";
 import botSignOff from "../../lib/botSignOff";
-import botSignOff from "../../lib/botSignOff";
 
 export default async function handler(
     req: NextApiRequest,
