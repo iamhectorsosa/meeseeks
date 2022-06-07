@@ -12,6 +12,7 @@ export default function botSignOff(type: string) {
         `and I think this ${type} should've been an unhandled server error`,
         `and I are asking ourselves a simple question: why`,
         `and I question if I could've been a useful bot`,
+        `said: _"shoot the messenger, not the message"_. Wait what?`,
     ];
     const botSignOff =
         botSignOffMessages[

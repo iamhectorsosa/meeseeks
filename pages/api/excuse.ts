@@ -41,8 +41,15 @@ export default async function handler(
                         type: "section",
                         text: {
                             type: "mrkdwn",
-                            text: "<@${user_id}> cannot make it and left you this message: Sorry! ${excuse}",
+                            text: "<@${user_id}> can't make it and left you this message:",
                         },
+                    },
+                    {
+                        "type": "section",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "> _Sorry! ${excuse}_"
+                        }
                     },
                     {
                         type: "context",
