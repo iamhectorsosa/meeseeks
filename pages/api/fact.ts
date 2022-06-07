@@ -1,8 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import getafact from "../../lib/getafact";
 import database from "../../lib/database";
-
 import { doc, getDoc } from "firebase/firestore";
+
+import getFact from "../../lib/getFact";
+import botSignOff from "../../lib/botSignOff";
 
 export default async function handler(
     req: NextApiRequest,
@@ -29,18 +30,29 @@ export default async function handler(
                 "Content-type": "application/json",
             };
 
+            let fact: string = await getFact();
+
             let raw = `{
                 response_type: "in_channel",
                 blocks: [
                     {
                         type: "section",
                         text: {
-                            type: "mrkdwn",
-                            text: "I'm Mr. Meeseeks! Look at me! So you want a useless fact, <@${user_id}>? Suuuuure can doooooo!",
+                            type: "plain_text",
+                            text: "${fact}",
                         },
                     },
+                    {
+                        type: "context",
+                        elements: [
+                            {
+                                type: "mrkdwn",
+                                text: "*<@${user_id}>* ${botSignOff}.",
+                            },
+                        ],
+                    },
                 ],
-                text: "I'm Mr. Meeseeks! Look at me!",
+                text: "${fact}!",
             }`;
 
             const requestOptions = {
@@ -49,31 +61,7 @@ export default async function handler(
                 body: raw,
             };
 
-            fetch(`${response_url}`, requestOptions);
-
-            let fact: string = await getafact();
-
-            let factBody = `{
-                response_type: "in_channel",
-                blocks: [
-                    {
-                        type: "section",
-                        text: {
-                            type: "mrkdwn",
-                            text: "${fact}",
-                        },
-                    },
-                ],
-                text: "${fact}!",
-            }`;
-
-            const factRequestOptions = {
-                method: "POST",
-                headers,
-                body: factBody,
-            };
-
-            await fetch(`${response_url}`, factRequestOptions);
+            await fetch(`${response_url}`, requestOptions);
             res.status(200).end();
         } catch (error) {
             console.log(error);

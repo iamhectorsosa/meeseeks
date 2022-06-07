@@ -1,4 +1,4 @@
-export default async function getajoke() {
+export default async function getJoke() {
     try {
         const res = await fetch("https://icanhazdadjoke.com/", {
             method: "GET",

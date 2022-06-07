@@ -1,8 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import getAdvice from "../../lib/getAdvice";
 import database from "../../lib/database";
-
 import { doc, getDoc } from "firebase/firestore";
+
+import getAdvice from "../../lib/getAdvice";
+import botSignOff from "../../lib/botSignOff";
 
 export default async function handler(
     req: NextApiRequest,
@@ -29,18 +30,29 @@ export default async function handler(
                 "Content-type": "application/json",
             };
 
+            let advice: string = await getAdvice();
+
             let raw = `{
                 response_type: "in_channel",
                 blocks: [
                     {
                         type: "section",
                         text: {
-                            type: "mrkdwn",
-                            text: "I'm Mr. Meeseeks! Look at me! So you want an Advice, <@${user_id}>? Suuuuure can doooooo!",
+                            type: "plain_text",
+                            text: "${advice}",
                         },
                     },
+                    {
+                        type: "context",
+                        elements: [
+                            {
+                                type: "mrkdwn",
+                                text: "*<@${user_id}>* ${botSignOff}.",
+                            },
+                        ],
+                    },
                 ],
-                text: "I'm Mr. Meeseeks! Look at me!",
+                text: "${advice}!",
             }`;
 
             const requestOptions = {
@@ -49,31 +61,7 @@ export default async function handler(
                 body: raw,
             };
 
-            fetch(`${response_url}`, requestOptions);
-
-            let advice: string = await getAdvice();
-
-            let adviceBody = `{
-                response_type: "in_channel",
-                blocks: [
-                    {
-                        type: "section",
-                        text: {
-                            type: "mrkdwn",
-                            text: "${advice}",
-                        },
-                    },
-                ],
-                text: "${advice}!",
-            }`;
-
-            const adviceRequestOptions = {
-                method: "POST",
-                headers,
-                body: adviceBody,
-            };
-
-            await fetch(`${response_url}`, adviceRequestOptions);
+            await fetch(`${response_url}`, requestOptions);
             res.status(200).end();
         } catch (error) {
             console.log(error);

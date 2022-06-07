@@ -1,8 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import getajoke from "../../lib/getajoke";
 import database from "../../lib/database";
-
 import { doc, getDoc } from "firebase/firestore";
+
+import getJoke from "../../lib/getJoke";
+import botSignOff from "../../lib/botSignOff";
 
 export default async function handler(
     req: NextApiRequest,
@@ -29,18 +30,29 @@ export default async function handler(
                 "Content-type": "application/json",
             };
 
+            let joke: string = await getJoke();
+
             let raw = `{
                 response_type: "in_channel",
                 blocks: [
                     {
                         type: "section",
                         text: {
-                            type: "mrkdwn",
-                            text: "I'm Mr. Meeseeks! Look at me! So you want a joke, <@${user_id}>? Suuuuure can doooooo!",
+                            type: "plain_text",
+                            text: "${joke}",
                         },
                     },
+                    {
+                        type: "context",
+                        elements: [
+                            {
+                                type: "mrkdwn",
+                                text: "*<@${user_id}>* ${botSignOff}.",
+                            },
+                        ],
+                    },
                 ],
-                text: "I'm Mr. Meeseeks! Look at me!",
+                text: "${joke}!",
             }`;
 
             const requestOptions = {
@@ -49,31 +61,7 @@ export default async function handler(
                 body: raw,
             };
 
-            fetch(`${response_url}`, requestOptions);
-
-            let joke: string = await getajoke();
-
-            let jokeBody = `{
-                response_type: "in_channel",
-                blocks: [
-                    {
-                        type: "section",
-                        text: {
-                            type: "mrkdwn",
-                            text: "${joke}",
-                        },
-                    },
-                ],
-                text: "${joke}!",
-            }`;
-
-            const jokeRequestOptions = {
-                method: "POST",
-                headers,
-                body: jokeBody,
-            };
-
-            await fetch(`${response_url}`, jokeRequestOptions);
+            await fetch(`${response_url}`, requestOptions);
             res.status(200).end();
         } catch (error) {
             console.log(error);
