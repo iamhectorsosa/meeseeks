@@ -40,7 +40,7 @@ export default async function handler(
                     {
                         type: "section",
                         text: {
-                            type: "plain_text",
+                            type: "mrkdwn",
                             text: "<@${user_id}> cannot make it and left you this message: Sorry! ${excuse}",
                         },
                     },

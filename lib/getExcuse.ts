@@ -5,7 +5,7 @@ export default async function getExcuse() {
             headers: { Accept: "application/json" },
         });
         const data = await res.json();
-        return data.excuse;
+        return data[0].excuse;
     } catch (error) {
         console.log(error);
     }
