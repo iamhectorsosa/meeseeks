@@ -4,6 +4,7 @@ import { doc, getDoc } from "firebase/firestore";
 
 import getJoke from "../../lib/getJoke";
 import botSignOff from "../../lib/botSignOff";
+import botSignOff from "../../lib/botSignOff";
 
 export default async function handler(
     req: NextApiRequest,
@@ -32,15 +33,26 @@ export default async function handler(
 
             let joke: string = await getJoke();
 
+            const botMessage: string = botSignOff();
+
             let raw = `{
                 response_type: "in_channel",
                 blocks: [
                     {
                         type: "section",
                         text: {
-                            type: "mrkdwn",
-                            text: "${joke} <@${user_id}> ${botSignOff}_.",
+                            type: "plain_text",
+                            text: "${joke}",
                         },
+                    },
+                    {
+                        type: "context",
+                        elements: [
+                            {
+                                type: "mrkdwn",
+                                text: "*<@${user_id}>* ${botMessage}",
+                            },
+                        ],
                     },
                 ],
                 text: "${joke}!",

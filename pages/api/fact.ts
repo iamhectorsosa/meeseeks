@@ -32,15 +32,26 @@ export default async function handler(
 
             let fact: string = await getFact();
 
+            const botMessage: string = botSignOff();
+
             let raw = `{
                 response_type: "in_channel",
                 blocks: [
                     {
                         type: "section",
                         text: {
-                            type: "mrkdwn",
-                            text: "${fact} <@${user_id}> ${botSignOff}_.",
+                            type: "plain_text",
+                            text: "${fact}",
                         },
+                    },
+                    {
+                        type: "context",
+                        elements: [
+                            {
+                                type: "mrkdwn",
+                                text: "*<@${user_id}>* ${botMessage}",
+                            },
+                        ],
                     },
                 ],
                 text: "${fact}!",

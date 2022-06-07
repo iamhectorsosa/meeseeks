@@ -32,15 +32,26 @@ export default async function handler(
 
             let advice: string = await getAdvice();
 
+            const botMessage: string = botSignOff();
+
             let raw = `{
                 response_type: "in_channel",
                 blocks: [
                     {
                         type: "section",
                         text: {
-                            type: "mrkdwn",
-                            text: "${advice} <@${user_id}> ${botSignOff}_.",
+                            type: "plain_text",
+                            text: "${advice}",
                         },
+                    },
+                    {
+                        type: "context",
+                        elements: [
+                            {
+                                type: "mrkdwn",
+                                text: "*<@${user_id}>* ${botMessage}",
+                            },
+                        ],
                     },
                 ],
                 text: "${advice}!",
