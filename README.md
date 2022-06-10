@@ -42,7 +42,7 @@ Authorization: Bearer xoxb-1234-abcdefgh
 
 ### Required arguments
 
-As we keep reviewing our API method's docs. We also see that in order for our Slack bot to post a message, we also need at least to declare a `channel` and a `text`. Use this cURL snippet (remember to use your Bot's token) and  Postman to give it a try:
+As we keep reviewing our API method's docs, we also see that in order for our Slack bot to post a message, we also need at least to declare a `channel` and a `text`. Use this cURL snippet (remember to use your Bot's token) and  Postman to give it a try:
 
 ```bash
 curl --request POST 'https://slack.com/api/chat.postMessage' \
@@ -54,11 +54,11 @@ curl --request POST 'https://slack.com/api/chat.postMessage' \
 }'
 ```
 
-**Note**: passing `general` as the channel isn't considered a good practice. This is only for testing purposes. Ideally we want to declare a `channel_id` instead of a `channel_name` for `channel`. Here's more on how you can make sure you are [Picking the right conversation](https://api.slack.com/messaging/sending#conversations) (remember to keep in mind additional scopes you may require).
+**Note**: passing `general` as the channel isn't considered a good practice. This is only for testing purposes. Ideally we want to declare a `channel_id` instead of a `channel_name` for `channel`. Here's more on how you can make sure you are [picking the right conversation](https://api.slack.com/messaging/sending#conversations) (remember to keep in mind additional scopes you may require).
 
 ## Responding to Slash Commands
 
-**Slash Commands** allow users to invoke your bot by typing a string into the message box (i.e. `/greet`). They can also contain a payload of data that your Slack bot can use to respond in whatever way they process that payload. [Here](https://slack.com/help/articles/201259356) is a list of Slack built-in slash commands if you want to review what's possible.
+**Slash Commands** allow users to invoke your bot by typing a string into the message box (i.e. `/greet`). They also contain a payload of data that your Slack bot can use to respond in whatever way they process that payload. [Here](https://slack.com/help/articles/201259356) is a list of Slack built-in slash commands if you want to review what's possible.
 
 From **Slash Commands** you are able to click on **Create a New Command** and here's what you'll need (here's an example of mine):
 
@@ -110,7 +110,7 @@ Feel free to get experimental with using it as you build a better interactivity 
 
 ## Next.js API Handler
 
-So, how are we building our response? For that we need to fire up a Next.js project. If you need help starting one, I recommend using [this](https://nextjs.org/docs/getting-started) resource. Once there, let's create an API file named `greet`, set up our `Bot User OAuth Token` environment variable using an `.env.local` file (read how more about it [here](https://nextjs.org/docs/basic-features/environment-variables)) and here's what I ended up writing:
+So, how are we building our response? For that we need to fire up a Next.js project. If you need help starting one, I'd recommend using [this](https://nextjs.org/docs/getting-started) resource. Once there, let's create an API file named `greet`, set up our `Bot User OAuth Token` environment variable using an `.env.local` file (read more about environment variables [here](https://nextjs.org/docs/basic-features/environment-variables)). Here's what I ended up writing:
 
 ```javascript
 export default async function handler() {
@@ -156,9 +156,9 @@ Here what I've done adding multiple Slash commands:
 
 ## Exploring Mentions with your Bot
 
-How let's explore another highly common use case for your bot: **Handling mentions**. Slacks enables mentions via the subscription of events. The [Events API](https://api.slack.com/apis/connections/events-api) is a streamlined, easy way to build bots that responds to activities in Slack.
+Let's explore another highly common use case for your bot: **Handling mentions**. Slacks enables mentions via the subscription of events. The [Events API](https://api.slack.com/apis/connections/events-api) is a streamlined, easy way to build bots that respond to activities in Slack.
 
-To being working with Events, find the "Event Subscriptions" configuration page and use the toggle to turn them on. A Request URL will be required where Slack will send `HTTP POST` requests when the event is triggered.
+To begin working with Events, find the "Event Subscriptions" configuration page and use the toggle to turn them on. A Request URL will be required where Slack will send `HTTP POST` requests when the event is triggered.
 
 ### Digital Handshake
 
@@ -171,7 +171,7 @@ const { challenge } = req.body;
 res.status(200).json({ challenge: `${challenge}` });
 ```
 
-Once your URL es verified, go ahead and select an event that you wish to register to. I'm gonna go with `app_mention`. Also verify that your bot has the required scopes for the event you registered. In this case `app_mentions:read` is required. Here's the basic event structure payload you can expect:
+Once your URL is verified, go ahead and select an event that you wish to register to. I'm gonna go with `app_mention`. Also verify that your bot has the required scopes for the event you registered. In this case `app_mentions:read` is required. Here's the basic event structure payload you can expect:
 
 ```json
 {
@@ -211,3 +211,5 @@ Then, once I identify how I would like to handle the event. I process my handler
 ## Conclusion
 
 If you have a Slack Workspace with your friends or at work, you can definitely give [Meeseeks](https://meeseeksbot.vercel.app/) a try. This Slack Bot is opened sourced and publicly distributed (unless Slack takes it down after its review). For more details and information you can reference the [Meeseeks GitHub repository](https://github.com/ekqt/meeseeks) since it is Open-sourced.
+
+> If Meeseeks were your bot, what would you build for him?
