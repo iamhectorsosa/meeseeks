@@ -34,7 +34,7 @@ export default async function handler(
 
             const botMessage: string = botSignOff("excuse");
 
-            let raw = `{
+            let raw = {
                 response_type: "in_channel",
                 blocks: [
                     {
@@ -62,12 +62,12 @@ export default async function handler(
                     },
                 ],
                 text: "${excuse}!",
-            }`;
+            };
 
             const requestOptions = {
                 method: "POST",
                 headers,
-                body: raw,
+                body: JSON.stringify(raw),
             };
 
             await fetch(`${response_url}`, requestOptions);
