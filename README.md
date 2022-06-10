@@ -147,3 +147,65 @@ export default async function handler() {
     }
 }
 ```
+
+Here what I've done adding multiple Slash commands:
+
+![Meeseeks Slack Bot](https://res.cloudinary.com/dmca9ldbv/image/upload/v1654635710/blog/how-to-create-a-slack-bot/Preview_i8cvmx.png)
+
+## Exploring Mentions with your Bot
+
+How let's explore another highly common use case for your bot: **Handling mentions**. Slacks enables mentions via the subscription of events. The [Events API](https://api.slack.com/apis/connections/events-api) is a streamlined, easy way to build bots that responds to activities in Slack.
+
+To being working with Events, find the "Event Subscriptions" configuration page and use the toggle to turn them on. A Request URL will be required where Slack will send `HTTP POST` requests when the event is triggered.
+
+### Digital Handshake
+
+The events sent to your Request URL may contain sensitive information associated with the workspaces having approved your Slack app. To ensure that events are being delivered to a server under your direct control, we must verify your ownership by issuing you a challenge request.
+
+The first thing your application will require is a Request URL where Slack will send an HTTP Post request that doesn't require Authentication but you need to have a server respond code of `HTTP 200 OK` and return the challenge as well. Here's how I implemented mine:
+
+```javascript
+const { challenge } = req.body;
+res.status(200).json({ challenge: `${challenge}` });
+```
+
+Once your URL es verified, go ahead and select an event that you wish to register to. I'm gonna go with `app_mention`. Also verify that your bot has the required scopes for the event you registered. In this case `app_mentions:read` is required. Here's the basic event structure payload you can expect:
+
+```json
+{
+  token: '{..}',
+  team_id: '{..}',
+  api_app_id: '{..}',
+  event: {
+    client_msg_id: '{..}',
+    type: 'app_mention',
+    text: '<@U03JZTCSEC8>',
+    user: '{..}',
+    ts: '{..}',
+    team: '{..}',
+    blocks: [ [Object] ],
+    channel: '{..}',
+    event_ts: '{..}'
+  },
+  type: 'event_callback',
+  event_id: '{..}',
+  event_time: 1654874099,
+  authorizations: [
+    {
+      enterprise_id: null,
+      team_id: '{..}',
+      user_id: '{..}',
+      is_bot: true,
+      is_enterprise_install: false
+    }
+  ],
+  is_ext_shared_channel: false,
+  event_context: '{..}'
+}
+```
+
+Then, once I identify how I would like to handle the event. I process my handler function accordingly. Note that the Event API doesn't have a `response_url` as the Slash Command does, so take that into account. Also `app_mentions` type events only apply for Mentions in Channels whether it is the invite mention or subsequent mentions of your Slack Bot.
+
+## Conclusion
+
+If you have a Slack Workspace with your friends or at work, you can definitely give [Meeseeks](https://meeseeksbot.vercel.app/) a try. This Slack Bot is opened sourced and publicly distributed (unless Slack takes it down after its review). For more details and information you can reference the [Meeseeks GitHub repository](https://github.com/ekqt/meeseeks) since it is Open-sourced.
