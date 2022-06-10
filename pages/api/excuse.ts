@@ -41,27 +41,27 @@ export default async function handler(
                         type: "section",
                         text: {
                             type: "mrkdwn",
-                            text: "<@${user_id}> can't make it and left you this message:",
+                            text: `<@${user_id}> can't make it and left you this message:`,
                         },
                     },
                     {
-                        "type": "section",
-                        "text": {
-                            "type": "mrkdwn",
-                            "text": "> _Sorry! ${excuse}_"
-                        }
+                        type: "section",
+                        text: {
+                            type: "mrkdwn",
+                            text: `> _Sorry! ${excuse}_`,
+                        },
                     },
                     {
                         type: "context",
                         elements: [
                             {
                                 type: "mrkdwn",
-                                text: "*<@${user_id}>* ${botMessage}.",
+                                text: `*<@${user_id}>* ${botMessage}.`,
                             },
                         ],
                     },
                 ],
-                text: "${excuse}!",
+                text: `${excuse}!`,
             };
 
             const requestOptions = {

@@ -41,7 +41,7 @@ export default async function handler(
                         type: "section",
                         text: {
                             type: "plain_text",
-                            text: "${fact}",
+                            text: `${fact}`,
                         },
                     },
                     {
@@ -49,12 +49,12 @@ export default async function handler(
                         elements: [
                             {
                                 type: "mrkdwn",
-                                text: "*<@${user_id}>* ${botMessage}.",
+                                text: `*<@${user_id}>* ${botMessage}.`,
                             },
                         ],
                     },
                 ],
-                text: "${fact}!",
+                text: `${fact}!`,
             };
 
             const requestOptions = {
