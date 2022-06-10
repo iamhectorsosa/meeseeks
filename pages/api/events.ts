@@ -39,7 +39,7 @@ export default async function handler(
             };
 
             let raw = {
-                channel: `${event.item.channel}`,
+                channel: `${event.channel}`,
                 blocks: [
                     {
                         type: "section",
