@@ -1,6 +1,8 @@
 # How to Create a Slack Bot
 Slack applications have full access to its platform. It's really the best way to go if you want to create a highly custom and powerful Slack experience. Slack offers a large range of APIs that provide access to read, write, and update all kinds of data in Slack.
 
+![Meeseeks Bot](https://res.cloudinary.com/dmca9ldbv/image/upload/v1654876361/blog/how-to-create-a-slack-bot/banner_sgruk1.png)
+
 Today we will create a **Slack Bot** to send messages to all kinds of conversations using Web APIs and webhooks powered by Serverless Functions built using Next.js.
 
 ## A small note on Vercel and Next.js
