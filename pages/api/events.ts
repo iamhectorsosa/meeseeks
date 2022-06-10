@@ -1,6 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import database from "../../lib/database";
-import { doc, getDoc } from "firebase/firestore";
 
 export default async function handler(
     req: NextApiRequest,
@@ -10,11 +8,9 @@ export default async function handler(
         const { challenge } = req.body;
 
         try {
-            let raw = {
+            res.status(200).json({
                 challenge: `${challenge}`,
-            };
-
-            res.status(200).json({ raw });
+            });
         } catch (error) {
             console.log(error);
         }
